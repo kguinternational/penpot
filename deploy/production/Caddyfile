@@ -1,0 +1,34 @@
+{
+    email {$ACME_EMAIL:admin@example.com}
+    admin off
+}
+
+{$PENPOT_DOMAIN:localhost} {
+    # Match Penpot max multipart upload body size (350MB)
+    request_body {
+        max_size 367001600
+    }
+
+    # Add TLS transport header and hide server identity (frontend sets app security headers)
+    header {
+        Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+        -Server
+    }
+
+    # Route all traffic to penpot-frontend (which routes frontend, backend, admin, exporter, mcp)
+    reverse_proxy penpot-frontend:8080 {
+        transport http {
+            read_timeout 300s
+            write_timeout 300s
+        }
+    }
+
+    # Compression
+    encode zstd gzip
+
+    # Structured JSON access logs
+    log {
+        output stdout
+        format json
+    }
+}

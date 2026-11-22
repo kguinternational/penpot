@@ -1,0 +1,17 @@
+[Unit]
+Description=Penpot 24/7 Design & Prototyping Platform
+Requires=docker.service
+After=docker.service network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+WorkingDirectory=/opt/penpot/deploy/production
+ExecStart=/usr/bin/docker compose --env-file .env -f docker-compose.prod.yml up -d --remove-orphans
+ExecStop=/usr/bin/docker compose --env-file .env -f docker-compose.prod.yml down
+ExecReload=/usr/bin/docker compose --env-file .env -f docker-compose.prod.yml up -d --remove-orphans
+TimeoutStartSec=300
+
+[Install]
+WantedBy=multi-user.target

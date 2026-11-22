@@ -1,0 +1,10 @@
+[Unit]
+Description=Penpot Health & Readiness Watchdog
+After=penpot.service
+
+[Service]
+Type=oneshot
+WorkingDirectory=/opt/penpot/deploy/production
+ExecStart=/opt/penpot/deploy/production/scripts/watchdog.sh
+StandardOutput=journal
+StandardError=journal

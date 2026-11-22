@@ -89,10 +89,10 @@ services:
   #     - "443:443"
 
   penpot-frontend:
-    image: "penpotapp/frontend:${PENPOT_VERSION:-2.18}"
+    image: "penpotapp/frontend:${PENPOT_VERSION:-2.19}"
     restart: always
     ports:
-      - 9001:8080
+      - "127.0.0.1:9001:8080"
 
     volumes:
       - penpot_assets:/opt/data/assets
@@ -130,7 +130,7 @@ services:
       # PENPOT_DISABLE_IPV6_LISTEN: "true"
 
   penpot-backend:
-    image: "penpotapp/backend:${PENPOT_VERSION:-2.18}"
+    image: "penpotapp/backend:${PENPOT_VERSION:-2.19}"
     restart: always
 
     volumes:
@@ -196,7 +196,7 @@ services:
       # PENPOT_MCP_FEEDBACK_EMAIL: mcp-feedback@example.com
 
   penpot-admin-console:
-    image: "penpotapp/admin-console:${PENPOT_VERSION:-2.18}"
+    image: "penpotapp/admin-console:${PENPOT_VERSION:-2.19}"
     restart: always
 
     depends_on:
@@ -214,7 +214,7 @@ services:
       PENPOT_INTERNAL_URI: http://penpot-frontend:8080
 
   penpot-mcp:
-    image: "penpotapp/mcp:${PENPOT_VERSION:-2.18}"
+    image: "penpotapp/mcp:${PENPOT_VERSION:-2.19}"
     restart: always
     networks:
       - penpot
@@ -225,7 +225,7 @@ services:
       # PENPOT_MCP_BACKEND_URI: http://penpot-backend:6060/
 
   penpot-exporter:
-    image: "penpotapp/exporter:${PENPOT_VERSION:-2.18}"
+    image: "penpotapp/exporter:${PENPOT_VERSION:-2.19}"
     restart: always
 
     depends_on:
@@ -314,6 +314,6 @@ services:
     expose:
       - '1025'
     ports:
-      - "8025:8025"
+      - "127.0.0.1:8025:8025"
     networks:
       - penpot

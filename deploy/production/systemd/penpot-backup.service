@@ -1,0 +1,11 @@
+[Unit]
+Description=Daily Automated Penpot Backup
+Requires=penpot.service
+After=penpot.service
+
+[Service]
+Type=oneshot
+WorkingDirectory=/opt/penpot/deploy/production
+ExecStart=/opt/penpot/deploy/production/scripts/backup.sh
+StandardOutput=journal
+StandardError=journal
